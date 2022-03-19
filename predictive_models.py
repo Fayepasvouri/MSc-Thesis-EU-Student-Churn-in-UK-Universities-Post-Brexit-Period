@@ -5,6 +5,28 @@ import plotly.graph_objs as go#visualization
 import plotly.tools as tls#visualization
 import plotly.figure_factory as ff#visualization
 
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix,accuracy_score,classification_report
+from sklearn.metrics import roc_auc_score,roc_curve,scorer
+from sklearn.metrics import f1_score
+import statsmodels.api as sm
+from sklearn.metrics import precision_score,recall_score
+
+from sklearn.feature_selection import chi2
+from sklearn.feature_selection import SelectKBest
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import export_graphviz
+from sklearn import tree
+from graphviz import Source
+from IPython.display import SVG,display
+
+from sklearn.datasets import load_iris
+from sklearn import tree
+
+from sklearn.externals.six import StringIO  
+import pydot 
 
 
 bi_cs = df.nunique()[df.nunique() == 2].keys()
@@ -54,15 +76,6 @@ def plot_radar(df,aggregate,title) :
 #plot
 plot_radar(dat_rad,1,"Churn -  Customers")
 plot_radar(dat_rad,0,"Non Churn - Customers")
-
-
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix,accuracy_score,classification_report
-from sklearn.metrics import roc_auc_score,roc_curve,scorer
-from sklearn.metrics import f1_score
-import statsmodels.api as sm
-from sklearn.metrics import precision_score,recall_score
 
 
 Id_col     = ['Q1']
@@ -167,9 +180,6 @@ def telecom_churn_prediction(algorithm,training_x,testing_x,
     
     
 
-from sklearn.feature_selection import chi2
-from sklearn.feature_selection import SelectKBest
-
 #select columns
 cols = [i for i in df.columns if i not in Id_col + target_col ]
 
@@ -231,12 +241,6 @@ data=[trace,trace1]
 fig = go.Figure(data=data,layout=layout)
 py.iplot(fig)
 
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.tree import export_graphviz
-from sklearn import tree
-from graphviz import Source
-from IPython.display import SVG,display
-
 #top 3 categorical features
 features_cat  = score[score["feature_type"] == "Categorical"]["features"][:3].tolist()
 
@@ -288,8 +292,7 @@ plot_decision_tree(features_num,3,"gini","best")
 plot_decision_tree(features_cat,3,"entropy","best",
                    model_performance = True ,)
 
-from sklearn.datasets import load_iris
-from sklearn import tree
+
 
 clf = tree.DecisionTreeClassifier()
 iris = load_iris()
@@ -298,8 +301,6 @@ clf = clf.fit(iris.data, iris.target)
 tree.export_graphviz(clf,
 out_file='tree.dot') 
  
-from sklearn.externals.six import StringIO  
-import pydot 
 dot_data = StringIO() 
 tree.export_graphviz(clf, out_file=dot_data) 
 graph = pydot.graph_from_dot_data(dot_data.getvalue()) 
