@@ -1,5 +1,29 @@
 from sklearn.model_selection import train_test_split
 
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
+from sklearn.metrics import roc_auc_score, roc_curve, classification_report
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+from sklearn import svm, datasets
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import plot_confusion_matrix
+from sklearn.naive_bayes import GaussianNB
+
 train, test = train_test_split(df, test_size=0.25)
 
 # predictive model
@@ -26,8 +50,6 @@ df[cols] = df[cols].applymap(np.int64)
 print(df)
 
 
-from sklearn.model_selection import train_test_split
-
 train, test = train_test_split(df, test_size=0.40)
 
 train_y = train["Q16"]
@@ -37,9 +59,6 @@ train_x = train
 train_x.pop("Q16")
 test_x = test
 test_x.pop("Q16")
-
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, classification_report
 
 logisticRegr = LogisticRegression()
 logisticRegr.fit(X=train_x, y=train_y)
@@ -69,18 +88,6 @@ plt.ylabel("True label", fontsize=14)
 plt.xlabel("Predicted label", fontsize=14)
 
 df["Q16"].value_counts()
-
-import pandas as pd
-import numpy as np
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler, LabelEncoder
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split, GridSearchCV, RandomizedSearchCV
-from sklearn.metrics import roc_auc_score, roc_curve, classification_report
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import SVC
-from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 
 X = df.drop("Q16", axis=1)
 y = df["Q16"]
@@ -208,15 +215,11 @@ print(classification_report(y_test, sgb_y_pred))
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
-from sklearn.naive_bayes import GaussianNB
 model = GaussianNB()
 model.fit(X_train, y_train)
 y_model = model.predict(X_test)
 
-from sklearn.metrics import accuracy_score
 print("SGB accuracy score is:", accuracy_score(y_test, y_model))
-
-from sklearn.metrics import confusion_matrix
 
 mat = confusion_matrix(y_test, y_model)
 
@@ -224,13 +227,6 @@ sns.heatmap(mat, square=True, annot=True, cbar=False)
 plt.xlabel('predicted value')
 plt.ylabel('true value');
 
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-from sklearn import svm, datasets
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import plot_confusion_matrix
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
 
