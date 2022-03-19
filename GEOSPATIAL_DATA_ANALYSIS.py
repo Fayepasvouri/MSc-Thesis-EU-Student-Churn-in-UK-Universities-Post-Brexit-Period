@@ -26,6 +26,9 @@ import cartopy.feature as cfeature
 
 import matplotlib.pyplot as plt
 import seaborn as sns 
+import csv
+import plotly.express as px
+from iso3166 import countries
 
 data = pd.read_csv("C:/Users/Faye/Desktop/Master/data_geo_dissertation.csv")
 print(data)
@@ -90,8 +93,6 @@ gdf.plot()
 ax = gdf.plot(color='r', zorder=2)
 world.plot(ax=ax, zorder=1)
 
-import csv
-
 results_per_country_lon_lat="C:/Users/Faye/Desktop/Master/test2.xlsx"
 map1=pd.read_excel(results_per_country_lon_lat) #, names=['Codes', 'Total', 'Latitude', 'Longitude'])
 print(map1)
@@ -122,7 +123,6 @@ plt.show()
 
 map1.S.unique()
 
-from iso3166 import countries
 print(countries.get('us'))
 
 def rename(country):
@@ -142,16 +142,12 @@ print('we lost', old_sample_number-new_sample_number, 'samples after converting'
 print(countriesData)
 
 
-
 country_df = pd.DataFrame(data=[countriesData.value_counts().index, countriesData.value_counts().values],index=['country','count']).T
 
 
 #Converting count values to int because this will be important for plotly
 country_df['count']=pd.to_numeric(country_df['count'])
 
-
-
-import plotly.express as px
 fig = px.scatter_geo(country_df, locations="country", size='count',
                      hover_name="country", color='country',
                      projection="natural earth")
