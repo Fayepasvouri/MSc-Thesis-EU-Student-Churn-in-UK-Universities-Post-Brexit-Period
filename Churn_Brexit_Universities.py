@@ -10,6 +10,11 @@ import matplotlib.pyplot as plt
 import chart_studio.plotly as py
 import plotly.graph_objects as go
 
+from sklearn.preprocessing import LabelEncoder
+from sklearn.svm import SVC
+import plotly.graph_objs as go
+import plotly.offline as py
+
 # read the CSV file that has been saved as utf=8
 df = pd.read_csv("C:/Users/Faye/Desktop/Master/data_thesis.csv")
 print(df)
@@ -71,11 +76,6 @@ num_cols = [x for x in df.columns if x not in cat_cols + target_col + Id_col]
 # Separating churn and non churn customers
 churn = df[df["Q16"] == "Yes"]
 not_churn = df[df["Q16"] == "No"]
-
-from sklearn.preprocessing import LabelEncoder
-from sklearn.svm import SVC
-import plotly.graph_objs as go
-import plotly.offline as py
 
 py.init_notebook_mode(connected=True)
 
